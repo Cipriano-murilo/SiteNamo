@@ -3,13 +3,6 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const { sendNewUserNotification, sendMessageNotification } = require('./emailService');
 
-const pool = new Pool ({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthourized: false
-  }
-});
-
 const app = express();
 const PORT = 3000;
 
@@ -23,6 +16,13 @@ app.use(cors({
   methods: ['GET','POST','PUT','DELETE','OPTIONS']
 }));
 app.use(express.json());
+
+const pool = new Pool ({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthourized: false
+  }
+});
 
 app.post('/api/login', async (req, res) => {
   try {
