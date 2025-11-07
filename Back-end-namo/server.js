@@ -1,7 +1,14 @@
 const express = require('express');
 const cors = require('cors');
-const pool = require('./db');
+const { Pool } = require('pg');
 const { sendNewUserNotification, sendMessageNotification } = require('./emailService');
+
+const pool = new Pool ({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthourized: false
+  }
+});
 
 const app = express();
 const PORT = 3000;
